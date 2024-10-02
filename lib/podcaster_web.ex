@@ -43,7 +43,7 @@ defmodule PodcasterWeb do
         layouts: [html: PodcasterWeb.Layouts]
 
       import Plug.Conn
-      import PodcasterWeb.Gettext
+      use Gettext, backend: PodcasterWeb.Gettext
 
       unquote(verified_routes())
     end
@@ -85,7 +85,7 @@ defmodule PodcasterWeb do
       import Phoenix.HTML
       # Core UI components and translation
       import PodcasterWeb.CoreComponents
-      import PodcasterWeb.Gettext
+      use Gettext, backend: PodcasterWeb.Gettext
 
       # Shortcut for generating JS commands
       alias Phoenix.LiveView.JS

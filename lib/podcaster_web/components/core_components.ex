@@ -17,7 +17,7 @@ defmodule PodcasterWeb.CoreComponents do
   use Phoenix.Component
 
   alias Phoenix.LiveView.JS
-  import PodcasterWeb.Gettext
+  use Gettext, backend: PodcasterWeb.Gettext
 
   @doc """
   Renders a modal.
