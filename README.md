@@ -11,6 +11,11 @@ mix setup             # deps, db migrations, tailwind, esbuild
 iex -S mix phx.server # start server in interpreter
 ```
 
+## Original Idea
+
+- [Transcribe Podcasts with Whisper AI & Elixir in Livebook](https://youtu.be/rHRbZ_MH3Lw?si=k1aOe2BymoFgt17r)
+- [Boost Your AI Projects: Cloud GPUs + Elixir](https://youtu.be/NOQO9EBjLj4?si=elKqzglLKe0CT_KU)
+
 ## Troubleshooting
 
 To full clean and rebuild the project
