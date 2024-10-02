@@ -9,6 +9,15 @@ defmodule Podcaster.Podcast.Episode do
     repo Podcaster.Repo
   end
 
+  code_interface do
+    define :create, action: :create
+    define :update, action: :update
+    define :destroy, action: :destroy
+
+    define :all, action: :read
+    define :get, action: :read, args: [:id], get?: true
+  end
+
   actions do
     defaults [:read, :destroy, create: [], update: []]
   end

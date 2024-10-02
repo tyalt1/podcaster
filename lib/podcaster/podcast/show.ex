@@ -10,9 +10,12 @@ defmodule Podcaster.Podcast.Show do
   end
 
   code_interface do
+    define :create, action: :create
+    define :update, action: :update
+    define :destroy, action: :destroy
+
     define :all, action: :read
     define :get, action: :read, args: [:id], get?: true
-    define :get_by_name, action: :read, args: [:name], get?: true
   end
 
   actions do

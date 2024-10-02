@@ -42,7 +42,6 @@ config :podcaster,
   generators: [timestamp_type: :utc_datetime],
   ash_domains: [Podcaster.Podcast]
 
-
 # Configures the endpoint
 config :podcaster, PodcasterWeb.Endpoint,
   url: [host: "localhost"],

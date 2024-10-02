@@ -32,6 +32,9 @@ defmodule Podcaster.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:req, "~> 0.5.6"},
+      {:fast_rss, "~> 0.5.0"},
+
       # tooling
       {:ex_doc, "~> 0.31", only: :dev, runtime: false},
       {:dialyxir, "~> 1.3", only: [:dev], runtime: false},
