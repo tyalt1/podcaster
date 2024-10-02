@@ -32,6 +32,22 @@ defmodule Podcaster.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      # tooling
+      {:ex_doc, "~> 0.31", only: :dev, runtime: false},
+      {:dialyxir, "~> 1.3", only: [:dev], runtime: false},
+      {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
+
+      # ash
+      {:ash, "~> 3.1"},
+      {:ash_phoenix, "~> 2.0"},
+      {:ash_postgres, "~> 2.0"},
+      {:ash_authentication, "~> 4.0"},
+      {:ash_authentication_phoenix, "~> 2.0"},
+      # {:ash_json_api, "~> 1.0"},
+      # {:open_api_spex, "~> 3.16"},
+      # {:ash_graphql, "~> 1.1.1"},
+
+      # phoenix
       {:phoenix, "~> 1.7.14"},
       {:phoenix_ecto, "~> 4.5"},
       {:ecto_sql, "~> 3.10"},
