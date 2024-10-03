@@ -12,4 +12,5 @@
 
 alias Podcaster.Podcast
 
-Podcast.create_from_rss_feed_url("https://feeds.fireside.fm/elixiroutlaws/rss")
+{:ok, show} = Podcast.create_from_rss_feed_url("https://feeds.fireside.fm/elixiroutlaws/rss")
+Podcast.create_episodes_from_show(show)

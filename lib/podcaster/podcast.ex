@@ -7,7 +7,8 @@ defmodule Podcaster.Podcast do
   end
 
   def create_from_rss_feed_url(rss_feed_url) when is_binary(rss_feed_url) do
-    rss_feed = fetch_rss_feed(rss_feed_url)
+    %{body: rss_body} = Req.get!(rss_feed_url)
+    {:ok, rss_feed} = FastRSS.parse_rss(rss_body)
 
     title = rss_feed["title"]
     items = rss_feed["items"]
@@ -20,23 +21,14 @@ defmodule Podcaster.Podcast do
   end
 
   def create_episodes_from_show(show) when is_struct(show, Podcaster.Podcast.Show) do
-    rss_feed = fetch_rss_feed(show.url)
+    show = Ash.load!(show, :rss_feed)
 
-    items = rss_feed["items"]
-
-    Enum.map(items, fn item ->
+    Enum.map(show.rss_feed["items"], fn item ->
       Podcaster.Podcast.Episode.create(%{
         title: item["title"],
         url: item["enclosure"]["url"],
         show_id: show.id,
       })
     end)
-  end
-
-  defp fetch_rss_feed(rss_feed_url) do
-    %{body: rss_body} = Req.get!(rss_feed_url)
-    {:ok, rss_feed} = FastRSS.parse_rss(rss_body)
-
-    rss_feed
   end
 end
