@@ -19,18 +19,28 @@ defmodule Podcaster.Podcast.Episode do
   end
 
   actions do
-    defaults [:read, :destroy, create: [], update: []]
+    defaults [:read, :destroy, create: [:title, :url, :show_id], update: :*]
   end
 
   attributes do
     uuid_primary_key :id
 
-    attribute :title, :string
-    attribute :url, :string
+    attribute :title, :string do
+      public? true
+    end
+
+    attribute :url, :string do
+      public? true
+    end
+
     timestamps()
   end
 
   relationships do
     belongs_to :show, Podcaster.Podcast.Show
+  end
+
+  identities do
+    identity :unique_url, [:url]
   end
 end

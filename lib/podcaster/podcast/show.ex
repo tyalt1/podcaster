@@ -19,7 +19,7 @@ defmodule Podcaster.Podcast.Show do
   end
 
   actions do
-    defaults [:read, :destroy, create: [:title, :url], update: :*]
+    defaults [:read, :destroy, create: [:title, :url, :num_of_episodes], update: :*]
   end
 
   attributes do
