@@ -14,7 +14,7 @@ defmodule Podcaster.Podcast do
     show_title = rss_feed["title"]
 
     Podcaster.Podcast.Show.create(%{
-      name: show_title,
+      title: show_title,
       url: rss_feed_url
     })
   end

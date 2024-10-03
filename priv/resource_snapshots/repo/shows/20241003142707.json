@@ -17,8 +17,8 @@
       "primary_key?": false,
       "references": null,
       "size": null,
-      "source": "name",
-      "type": "text"
+      "source": "title",
+      "type": "citext"
     },
     {
       "allow_nil?": false,
@@ -29,6 +29,16 @@
       "size": null,
       "source": "url",
       "type": "text"
+    },
+    {
+      "allow_nil?": true,
+      "default": "0",
+      "generated?": false,
+      "primary_key?": false,
+      "references": null,
+      "size": null,
+      "source": "num_of_episodes",
+      "type": "bigint"
     },
     {
       "allow_nil?": false,
@@ -56,8 +66,23 @@
   "custom_indexes": [],
   "custom_statements": [],
   "has_create_action": true,
-  "hash": "5D5FD8F8BBC88C4998E27F2AF512587E58666EC03295DC8FB2084553FF1201CB",
-  "identities": [],
+  "hash": "1C980CE0A0B34122D09BC7039E58D6259D51C7A7DC6CB58B330B66323DBA7E62",
+  "identities": [
+    {
+      "all_tenants?": false,
+      "base_filter": null,
+      "index_name": "shows_unique_url_index",
+      "keys": [
+        {
+          "type": "atom",
+          "value": "url"
+        }
+      ],
+      "name": "unique_url",
+      "nils_distinct?": true,
+      "where": null
+    }
+  ],
   "multitenancy": {
     "attribute": null,
     "global": null,
