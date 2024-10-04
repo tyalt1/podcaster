@@ -12,5 +12,11 @@
 
 alias Podcaster.Podcast
 
-{:ok, show} = Podcast.create_from_rss_feed_url("https://feeds.fireside.fm/elixiroutlaws/rss")
-Podcast.create_episodes_from_show(show)
+try do
+  {:ok, show} = Podcast.create_from_rss_feed_url("https://feeds.fireside.fm/elixiroutlaws/rss")
+  Podcast.create_episodes_from_show(show)
+rescue
+  _ -> :ok
+catch
+  _ -> :ok
+end
