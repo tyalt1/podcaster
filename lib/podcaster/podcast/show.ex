@@ -47,12 +47,12 @@ defmodule Podcaster.Podcast.Show do
     has_many :episodes, Podcaster.Podcast.Episode
   end
 
-  identities do
-    identity :unique_url, [:url]
-  end
-
   calculations do
     calculate :rss_feed, :map, Podcaster.Podcast.Show.Calculations.RSSFeed
+  end
+
+  identities do
+    identity :unique_url, [:url]
   end
 end
 

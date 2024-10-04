@@ -27,7 +27,7 @@ defmodule Podcaster.Podcast do
       Podcaster.Podcast.Episode.create(%{
         title: item["title"],
         url: item["enclosure"]["url"],
-        show_id: show.id,
+        show_id: show.id
       })
     end)
   end

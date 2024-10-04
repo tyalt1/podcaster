@@ -34,6 +34,8 @@ defmodule Podcaster.MixProject do
     [
       {:req, "~> 0.5.6"},
       {:fast_rss, "~> 0.5.0"},
+      {:bumblebee, "~> 0.5.3"},
+      {:exla, "~> 0.7.1"},
 
       # tooling
       {:ex_doc, "~> 0.31", only: :dev, runtime: false},
@@ -89,9 +91,7 @@ defmodule Podcaster.MixProject do
   # See the documentation for `Mix` for more info on aliases.
   defp aliases do
     [
-      setup: ["deps.get", "ecto.setup", "assets.setup", "assets.build"],
-      "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
-      "ecto.reset": ["ecto.drop", "ecto.setup"],
+      setup: ["deps.get", "ash.setup", "assets.setup", "assets.build"],
       test: ["ash.setup --quiet", "test"],
       "assets.setup": ["tailwind.install --if-missing", "esbuild.install --if-missing"],
       "assets.build": ["tailwind podcaster", "esbuild podcaster"],
