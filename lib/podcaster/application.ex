@@ -12,8 +12,10 @@ defmodule Podcaster.Application do
       Podcaster.Repo,
       {DNSCluster, query: Application.get_env(:podcaster, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: Podcaster.PubSub},
-      {Finch, name: Podcaster.Finch},# Start the Finch HTTP client for sending emails
-      PodcasterWeb.Endpoint, # Start to serve requests, typically the last entry
+      # Start the Finch HTTP client for sending emails
+      {Finch, name: Podcaster.Finch},
+      # Start to serve requests, typically the last entry
+      PodcasterWeb.Endpoint,
       Podcaster.ModelServer.WhisperServer
     ]
 

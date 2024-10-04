@@ -1,4 +1,8 @@
 defmodule Podcaster.Podcast.Show do
+  require Ash.Resource.Change.Builtins
+  require Ash.Resource.Change.Builtins
+  require Ash.Resource.Change.Builtins
+
   use Ash.Resource,
     otp_app: :podcaster,
     domain: Podcaster.Podcast,
@@ -10,16 +14,33 @@ defmodule Podcaster.Podcast.Show do
   end
 
   code_interface do
-    define :create, action: :create
     define :update, action: :update
     define :destroy, action: :destroy
 
     define :all, action: :read
     define :get, action: :read, args: [:id], get?: true
+
+    define :create_from_rss_feed_url, action: :create_from_rss_feed_url, args: [:rss_feed_url]
   end
 
   actions do
-    defaults [:read, :destroy, create: [:title, :url, :num_of_episodes], update: :*]
+    defaults [:read, :destroy, update: :*]
+
+    create :create_from_rss_feed_url do
+      argument :rss_feed_url, :string, allow_nil?: false
+
+      change before_transaction(fn changeset, _context ->
+               rss_feed_url = Ash.Changeset.get_argument(changeset, :rss_feed_url)
+
+               %{body: rss_body} = Req.get!(rss_feed_url)
+               {:ok, rss_feed} = FastRSS.parse_rss(rss_body)
+
+               Ash.Changeset.change_attributes(changeset,
+                 title: rss_feed["title"],
+                 url: rss_feed_url
+               )
+             end)
+    end
   end
 
   attributes do
@@ -34,12 +55,6 @@ defmodule Podcaster.Podcast.Show do
       allow_nil? false
     end
 
-    attribute :num_of_episodes, :integer do
-      public? true
-      default 0
-      constraints min: 0
-    end
-
     timestamps()
   end
 
@@ -48,24 +63,21 @@ defmodule Podcaster.Podcast.Show do
   end
 
   calculations do
-    calculate :rss_feed, :map, Podcaster.Podcast.Show.Calculations.RSSFeed
+    calculate :rss_feed, :map, fn records, _context ->
+      Enum.map(records, fn show ->
+        %{body: rss_body} = Req.get!(show.url)
+        {:ok, rss_feed} = FastRSS.parse_rss(rss_body)
+
+        rss_feed
+      end)
+    end
+  end
+
+  aggregates do
+    count :episode_count, :episodes
   end
 
   identities do
     identity :unique_url, [:url]
-  end
-end
-
-defmodule Podcaster.Podcast.Show.Calculations.RSSFeed do
-  use Ash.Resource.Calculation
-
-  @impl true
-  def calculate(records, _opts, _context) do
-    Enum.map(records, fn show ->
-      %{body: rss_body} = Req.get!(show.url)
-      {:ok, rss_feed} = FastRSS.parse_rss(rss_body)
-
-      rss_feed
-    end)
   end
 end

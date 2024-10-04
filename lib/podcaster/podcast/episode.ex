@@ -27,10 +27,16 @@ defmodule Podcaster.Podcast.Episode do
 
     attribute :title, :string do
       public? true
+      allow_nil? false
     end
 
     attribute :url, :string do
       public? true
+      allow_nil? false
+    end
+
+    attribute :transcript, {:array, :map} do
+      allow_nil? true
     end
 
     timestamps()
