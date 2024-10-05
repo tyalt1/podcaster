@@ -11,12 +11,15 @@
 # and so on) as they will fail if something goes wrong.
 
 alias Podcaster.Podcast
+alias Podcaster.Podcast.Show
 
-try do
-  show = Podcaster.Podcast.Show.create_from_rss_feed_url!("https://feeds.fireside.fm/elixiroutlaws/rss")
-  Podcast.create_episodes_from_show(show)
-rescue
-  _ -> :ok
-catch
-  _ -> :ok
+title = "Elixir Outlaws"
+url = "https://feeds.fireside.fm/elixiroutlaws/rss"
+
+case Show.create_from_rss_feed_url(url) do
+  {:ok, show} ->
+    Podcast.create_episodes_from_show(show)
+
+  _ ->
+    nil
 end
