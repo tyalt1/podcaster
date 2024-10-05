@@ -11,15 +11,28 @@ defmodule Podcaster.Podcast.Episode do
 
   code_interface do
     define :create, action: :create
-    define :update, action: :update
     define :destroy, action: :destroy
 
     define :all, action: :read
     define :get, action: :read, args: [:id], get?: true
+
+    define :add_transcript, action: :add_transcript, args: [:transcript]
   end
 
   actions do
-    defaults [:read, :destroy, create: [:title, :url, :show_id], update: :*]
+    defaults [:read, :destroy]
+
+    create :create do
+      accept [:title, :url, :show_id]
+    end
+
+    read :get_all_without_transcript do
+      filter expr(is_nil(transcript))
+    end
+
+    update :add_transcript do
+      accept [:transcript]
+    end
   end
 
   attributes do

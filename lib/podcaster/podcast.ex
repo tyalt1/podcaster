@@ -1,4 +1,6 @@
 defmodule Podcaster.Podcast do
+  require Ash.Query
+  require Logger
   use Ash.Domain
 
   resources do
@@ -19,5 +21,28 @@ defmodule Podcaster.Podcast do
       }
     end)
     |> Ash.bulk_create(Podcaster.Podcast.Episode, :create)
+  end
+
+  def update_transcripts(show) when is_struct(show, Podcaster.Podcast.Show) do
+    Podcaster.Podcast.Episode
+    |> Ash.Query.filter(show_id == ^show.id)
+    |> Ash.Query.filter(is_nil(transcript))
+    |> Ash.read!()
+    |> Enum.map(&update_transcripts/1)
+  end
+
+  def update_transcripts(episode) when is_struct(episode, Podcaster.Podcast.Episode) do
+    %{
+      transcription: transcript,
+      transcription_processing_seconds: seconds
+    } = Podcaster.ModelServer.WhisperServer.audio_to_chunks(episode.url)
+
+    Logger.info("completed transcription",
+      seconds: seconds,
+      episode_id: episode.id,
+      episode_title: episode.title
+    )
+
+    Podcaster.Podcast.Episode.add_transcript(episode, transcript)
   end
 end
