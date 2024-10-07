@@ -20,7 +20,7 @@ In order to run [`whisper`](https://huggingface.co/openai/whisper-tiny) (the mod
 ```elixir
 alias Podcaster.Podcast
 
-show = Podcast.can_create_show_from_rss_feed_url!(url)
+show = Podcast.create_show_from_rss_feed_url!(url)
 Podcast.create_episodes_from_show(show)
 Podcast.update_transcripts(show)
 ```
