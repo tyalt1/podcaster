@@ -32,8 +32,7 @@ defmodule Podcaster.Podcast.Show do
       change before_transaction(fn changeset, _context ->
                rss_feed_url = Ash.Changeset.get_argument(changeset, :rss_feed_url)
 
-               %{body: rss_body} = Req.get!(rss_feed_url)
-               {:ok, rss_feed} = FastRSS.parse_rss(rss_body)
+               rss_feed = fetch_and_parse_rss!(rss_feed_url)
 
                Ash.Changeset.change_attributes(changeset,
                  title: rss_feed["title"],
@@ -64,12 +63,7 @@ defmodule Podcaster.Podcast.Show do
 
   calculations do
     calculate :rss_feed, :map, fn records, _context ->
-      Enum.map(records, fn show ->
-        %{body: rss_body} = Req.get!(show.url)
-        {:ok, rss_feed} = FastRSS.parse_rss(rss_body)
-
-        rss_feed
-      end)
+      Enum.map(records, fn show -> fetch_and_parse_rss!(show.url) end)
     end
   end
 
@@ -79,5 +73,12 @@ defmodule Podcaster.Podcast.Show do
 
   identities do
     identity :unique_url, [:url]
+  end
+
+  defp fetch_and_parse_rss!(url) do
+    %{body: rss_body} = Req.get!(url)
+    {:ok, rss_feed} = FastRSS.parse_rss(rss_body)
+
+    rss_feed
   end
 end

@@ -4,7 +4,12 @@ defmodule Podcaster.Podcast do
   use Ash.Domain
 
   resources do
-    resource Podcaster.Podcast.Show
+    resource Podcaster.Podcast.Show do
+      define :create_show_from_rss_feed_url,
+        action: :create_from_rss_feed_url,
+        args: [:rss_feed_url]
+    end
+
     resource Podcaster.Podcast.Episode
   end
 
@@ -12,7 +17,6 @@ defmodule Podcaster.Podcast do
     show
     |> Ash.load!(:rss_feed)
     |> then(fn show -> show.rss_feed["items"] end)
-    |> Enum.reverse()
     |> Enum.map(fn item ->
       %{
         title: item["title"],

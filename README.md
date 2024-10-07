@@ -17,9 +17,12 @@ In order to run `whisper` (the model that converts audio to text) you need ffmpe
 
 ## Example
 
-```
-ep = List.first(Podcaster.Podcast.Episode.all!)
-output = Podcaster.ModelServer.WhisperServer.audio_to_chunks(ep.url)
+```elixir
+alias Podcaster.Podcast
+
+show = Podcast.can_create_show_from_rss_feed_url!(url)
+Podcast.create_episodes_from_show(show)
+Podcast.update_transcripts(show)
 ```
 
 ## Original Idea
