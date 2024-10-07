@@ -13,7 +13,7 @@ mix setup             # deps, db migrations, tailwind, esbuild
 iex -S mix phx.server # start server in interpreter
 ```
 
-In order to run `whisper` (the model that converts audio to text) you need ffmpeg installed.
+In order to run [`whisper`](https://huggingface.co/openai/whisper-tiny) (the model that converts audio to text) you need ffmpeg installed.
 
 ## Example
 
@@ -27,8 +27,12 @@ Podcast.update_transcripts(show)
 
 ## Original Idea
 
-- [Transcribe Podcasts with Whisper AI & Elixir in Livebook](https://youtu.be/rHRbZ_MH3Lw?si=k1aOe2BymoFgt17r)
-- [Boost Your AI Projects: Cloud GPUs + Elixir](https://youtu.be/NOQO9EBjLj4?si=elKqzglLKe0CT_KU)
+This is based on a small series of tutorials by [Code and Stuff](https://www.youtube.com/@CodeAndStuff). These videos are linked below:
+
+- Part 1: [Transcribe Podcasts with Whisper AI & Elixir in Livebook](https://youtu.be/rHRbZ_MH3Lw?si=k1aOe2BymoFgt17r)
+- Part 2: [Boost Your AI Projects: Cloud GPUs + Elixir](https://youtu.be/NOQO9EBjLj4?si=elKqzglLKe0CT_KU)
+
+In the tutorials he transcribed podcasts using code executed from a [Livebook](https://livebook.dev/). The goal of this project is to create a website to perform AI-based transcription, with Phoenix, Ash, and Liveview.
 
 ## Troubleshooting
 
