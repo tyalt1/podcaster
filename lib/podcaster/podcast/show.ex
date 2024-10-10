@@ -1,8 +1,4 @@
 defmodule Podcaster.Podcast.Show do
-  require Ash.Resource.Change.Builtins
-  require Ash.Resource.Change.Builtins
-  require Ash.Resource.Change.Builtins
-
   use Ash.Resource,
     otp_app: :podcaster,
     domain: Podcaster.Podcast,

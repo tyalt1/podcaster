@@ -18,6 +18,13 @@ defmodule PodcasterWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+
+    live "/shows", ShowLive.Index, :index
+    live "/shows/new", ShowLive.Index, :new
+    live "/shows/:id/edit", ShowLive.Index, :edit
+
+    live "/shows/:id", ShowLive.Show, :show
+    live "/shows/:id/show/edit", ShowLive.Show, :edit
   end
 
   # Other scopes may use custom stacks.

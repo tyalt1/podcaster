@@ -47,6 +47,5 @@ mix do deps.get + deps.compile + compile
 
 ## TODOs
 
-- UI for show
 - UI for episode
 - run transcript logic in remote node
