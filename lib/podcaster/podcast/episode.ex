@@ -20,10 +20,19 @@ defmodule Podcaster.Podcast.Episode do
   end
 
   actions do
-    defaults [:read, :destroy]
+    defaults [:destroy, update: :*]
 
     create :create do
-      accept [:title, :url, :show_id]
+      accept [:title, :url, :publish_date, :show_id]
+      primary? true
+    end
+
+    read :read do
+      primary? true
+    end
+
+    read :read_desc do
+      prepare build(sort: [{:publish_date, :desc}])
     end
 
     read :get_all_without_transcript do
@@ -46,6 +55,11 @@ defmodule Podcaster.Podcast.Episode do
     attribute :url, :string do
       public? true
       allow_nil? false
+    end
+
+    attribute :publish_date, :datetime do
+      public? true
+      allow_nil? true
     end
 
     attribute :transcript, {:array, :map} do

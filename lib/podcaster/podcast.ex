@@ -21,6 +21,7 @@ defmodule Podcaster.Podcast do
       %{
         title: item["title"],
         url: item["enclosure"]["url"],
+        publish_date: parse_rfc_822(item["pub_date"]),
         show_id: show.id
       }
     end)
@@ -48,5 +49,31 @@ defmodule Podcaster.Podcast do
     )
 
     Podcaster.Podcast.Episode.add_transcript(episode, transcript)
+  end
+
+  # Parse RFC 822 datetime. Example: "Wed, 06 Dec 2023 10:00:00 -0500"
+  defp parse_rfc_822(s) do
+    [_day_of_week, day, month, year, time, offset] = String.split(s)
+
+    month =
+      case month do
+        "Jan" -> "01"
+        "Feb" -> "02"
+        "Mar" -> "03"
+        "Apr" -> "04"
+        "May" -> "05"
+        "Jun" -> "06"
+        "Jul" -> "07"
+        "Aug" -> "08"
+        "Sep" -> "09"
+        "Oct" -> "10"
+        "Nov" -> "11"
+        "Dec" -> "12"
+      end
+
+    case DateTime.from_iso8601("#{year}-#{month}-#{day} #{time}.000#{offset}") do
+      {:ok, dt, _} -> dt
+      {:error, _} -> nil
+    end
   end
 end
