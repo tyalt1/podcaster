@@ -14,13 +14,23 @@ defmodule Podcaster.Podcast.Show do
     define :destroy, action: :destroy
 
     define :all, action: :read
-    define :get, action: :read, args: [:id], get?: true
+    define :get_by_id, action: :get_by_id, args: [:id], get?: true
 
     define :create_from_rss_feed_url, action: :create_from_rss_feed_url, args: [:rss_feed_url]
   end
 
   actions do
-    defaults [:read, :destroy, update: :*]
+    defaults [:destroy, update: :*]
+
+    read :read do
+      primary? true
+    end
+
+    read :get_by_id do
+      argument :id, :uuid, allow_nil?: false
+      filter expr(id == ^arg(:id))
+      get? true
+    end
 
     create :create_from_rss_feed_url do
       argument :rss_feed_url, :string, allow_nil?: false

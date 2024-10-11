@@ -14,7 +14,7 @@ defmodule Podcaster.Podcast.Episode do
     define :destroy, action: :destroy
 
     define :all, action: :read
-    define :get, action: :read, args: [:id], get?: true
+    define :get_by_id, action: :get_by_id, args: [:id], get?: true
 
     define :add_transcript, action: :add_transcript, args: [:transcript]
   end
@@ -22,12 +22,18 @@ defmodule Podcaster.Podcast.Episode do
   actions do
     defaults [:destroy, update: :*]
 
-    create :create do
-      accept [:title, :url, :publish_date, :show_id]
+    read :read do
       primary? true
     end
 
-    read :read do
+    read :get_by_id do
+      argument :id, :uuid, allow_nil?: false
+      filter expr(id == ^arg(:id))
+      get? true
+    end
+
+    create :create do
+      accept [:title, :url, :publish_date, :show_id]
       primary? true
     end
 
