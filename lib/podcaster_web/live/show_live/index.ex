@@ -30,17 +30,7 @@ defmodule PodcasterWeb.ShowLive.Index do
         <div class="sr-only">
           <.link navigate={~p"/shows/#{show}"}>Show</.link>
         </div>
-
-        <.link patch={~p"/shows/#{show}/edit"}>Edit</.link>
-      </:action>
-
-      <:action :let={{id, show}}>
-        <.link
-          phx-click={JS.push("delete", value: %{id: show.id}) |> hide("##{id}")}
-          data-confirm="Are you sure?"
-        >
-          Delete
-        </.link>
+        <.link navigate={~p"/episodes"}>View Episodes</.link>
       </:action>
     </.table>
     """

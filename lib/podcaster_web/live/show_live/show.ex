@@ -5,14 +5,21 @@ defmodule PodcasterWeb.ShowLive.Show do
   def render(assigns) do
     ~H"""
     <.header>
-      Show <%= @show.id %>
+      Show : <%= @show.title %>
       <:subtitle>This is a show record from your database.</:subtitle>
     </.header>
 
     <.list>
       <:item title="Id"><%= @show.id %></:item>
+
       <:item title="Title"><%= @show.title %></:item>
+
+      <:item title="Episodes">
+        <.link navigate={~p"/episodes?show_id=#{@show.id}"}>View Episodes</.link>
+      </:item>
+
       <:item title="URL"><%= @show.url %></:item>
+
       <:item title="Episode Count"><%= @show.episode_count %></:item>
     </.list>
 

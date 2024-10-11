@@ -21,10 +21,11 @@ defmodule PodcasterWeb.Router do
 
     live "/shows", ShowLive.Index, :index
     live "/shows/new", ShowLive.Index, :new
-    live "/shows/:id/edit", ShowLive.Index, :edit
-
     live "/shows/:id", ShowLive.Show, :show
-    live "/shows/:id/show/edit", ShowLive.Show, :edit
+
+    live "/episodes", EpisodeLive.Index, :index
+    live "/episodes/new", EpisodeLive.Index, :new
+    live "/episodes/:id", EpisodeLive.Show, :show
   end
 
   # Other scopes may use custom stacks.
