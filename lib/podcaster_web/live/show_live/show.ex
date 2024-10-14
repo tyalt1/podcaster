@@ -15,7 +15,9 @@ defmodule PodcasterWeb.ShowLive.Show do
       <:item title="Title"><%= @show.title %></:item>
 
       <:item title="Episodes">
-        <.link navigate={~p"/episodes?show_id=#{@show.id}"}>View Episodes</.link>
+        <.button phx-click={JS.navigate(~p"/episodes?show_id=#{@show.id}")}>
+          View Episodes
+        </.button>
       </:item>
 
       <:item title="URL"><%= @show.url %></:item>

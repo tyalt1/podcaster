@@ -28,13 +28,8 @@ defmodule PodcasterWeb.EpisodeLive.Index do
         </div>
       </:action>
 
-      <:action :let={{id, episode}}>
-        <.link
-          phx-click={JS.push("delete", value: %{id: episode.id}) |> hide("##{id}")}
-          data-confirm="Are you sure?"
-        >
-          Delete
-        </.link>
+      <:action :let={{_id, _episode}}>
+        <.link>View Transcript</.link>
       </:action>
     </.table>
     """
