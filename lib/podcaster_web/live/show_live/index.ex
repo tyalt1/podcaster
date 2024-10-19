@@ -30,7 +30,7 @@ defmodule PodcasterWeb.ShowLive.Index do
         <div class="sr-only">
           <.link navigate={~p"/shows/#{show}"}>Show</.link>
         </div>
-        <.link navigate={~p"/episodes"}>View Episodes</.link>
+        <.link navigate={~p"/episodes?show_id=#{show.id}"}>View Episodes</.link>
       </:action>
     </.table>
     """

@@ -27,10 +27,6 @@ defmodule PodcasterWeb.EpisodeLive.Index do
           <.link navigate={~p"/episodes/#{episode}"}>Show</.link>
         </div>
       </:action>
-
-      <:action :let={{_id, _episode}}>
-        <.link>View Transcript</.link>
-      </:action>
     </.table>
     """
   end
