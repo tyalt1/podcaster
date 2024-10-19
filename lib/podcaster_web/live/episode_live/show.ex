@@ -84,7 +84,7 @@ defmodule PodcasterWeb.EpisodeLive.Show do
           Podcaster.Podcast.update_transcripts(ep)
         end)
 
-        {:noreply, assign(socket, :episode, ep)}
+        {:noreply, assign(socket, :episode, Ash.reload!(ep, load: :show))}
 
       _ ->
         {:noreply, socket}
