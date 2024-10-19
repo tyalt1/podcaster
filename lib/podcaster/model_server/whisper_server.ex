@@ -42,22 +42,6 @@ defmodule Podcaster.ModelServer.WhisperServer do
     }
   end
 
-  @doc """
-  Convert audio to text. Takes audio file path.
-  """
-  @spec audio_to_text(binary()) :: binary()
-  def audio_to_text(audio_file_url) do
-    %{transcription: transcription} = audio_to_chunks(audio_file_url)
-
-    chunk_to_line = fn chunk ->
-      "- #{timestamp_hhmmss(chunk.start_timestamp_seconds)} | #{chunk.text}\n"
-    end
-
-    transcription
-    |> Enum.map(chunk_to_line)
-    |> Enum.join()
-  end
-
   @spec load_serving(keyword()) :: Nx.Serving.t()
   defp load_serving(opts) do
     stream = Keyword.get(opts, :stream, false)
@@ -112,19 +96,5 @@ defmodule Podcaster.ModelServer.WhisperServer do
     with {:ok, _res} <- Req.get(url: url, into: File.stream!(out_path)) do
       {:ok, out_path}
     end
-  end
-
-  # timestamp(0.0) => "00:00:00"
-  # timestamp(2896.4) => "00:48:16"
-  @spec timestamp_hhmmss(number()) :: binary()
-  defp timestamp_hhmmss(seconds) do
-    seconds = floor(seconds)
-    hours = div(seconds, 3600)
-    minutes = div(seconds, 60)
-    seconds = rem(seconds, 60)
-
-    [hours, minutes, seconds]
-    |> Enum.map(fn x -> x |> to_string |> String.pad_leading(2, "0") end)
-    |> Enum.join(":")
   end
 end

@@ -40,7 +40,7 @@ defmodule PodcasterWeb.ShowLive.FormComponent do
       {:ok, show} ->
         notify_parent({:saved, show})
 
-        Podcaster.Podcast.create_episodes_from_show(show)
+        create_show_hooks(show)
 
         socket =
           socket
@@ -60,5 +60,9 @@ defmodule PodcasterWeb.ShowLive.FormComponent do
       AshPhoenix.Form.for_create(Podcaster.Podcast.Show, :create_from_rss_feed_url, as: "show")
 
     assign(socket, form: to_form(form))
+  end
+
+  defp create_show_hooks(show) do
+    Podcaster.Podcast.create_episodes_from_show(show)
   end
 end
