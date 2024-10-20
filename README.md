@@ -48,7 +48,8 @@ mix do deps.get + deps.compile + compile
 ## TODOs
 
 - BUG: fix when multiple transcript requests are made
-- landing page
-- run transcript logic in remote node
-- add summary and summary generation to episode
-- scheduled scanning for show updating
+- UI: DARK MODE
+- UI: landing page
+- FEAT: run transcript logic in remote node
+- FEAT: add summary and summary generation to episode
+- FEAT: scheduled scanning for show updating
