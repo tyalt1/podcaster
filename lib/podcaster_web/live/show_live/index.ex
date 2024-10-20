@@ -11,9 +11,7 @@ defmodule PodcasterWeb.ShowLive.Index do
 
       <.live_component
         module={PodcasterWeb.ShowLive.FormComponent}
-        id={:new}
-        action={:new}
-        show={@show}
+        id="new-show"
       />
     </div>
 

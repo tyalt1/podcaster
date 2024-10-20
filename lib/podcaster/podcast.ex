@@ -1,7 +1,7 @@
 defmodule Podcaster.Podcast do
-  require Ash.Query
-  require Logger
   use Ash.Domain
+
+  require Logger
 
   resources do
     resource Podcaster.Podcast.Show do
@@ -30,8 +30,7 @@ defmodule Podcaster.Podcast do
 
   def update_transcripts(show) when is_struct(show, Podcaster.Podcast.Show) do
     Podcaster.Podcast.Episode
-    |> Ash.Query.filter(show_id == ^show.id)
-    |> Ash.Query.filter(is_nil(transcript))
+    |> Ash.Query.for_read(:get_episodes_for_show_with_no_transcript, %{show_id: show.id})
     |> Ash.read!()
     |> Enum.map(&update_transcripts/1)
   end
