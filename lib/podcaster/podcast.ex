@@ -14,9 +14,9 @@ defmodule Podcaster.Podcast do
   end
 
   def create_episodes_from_show(show) when is_struct(show, Podcaster.Podcast.Show) do
-    show
-    |> Ash.load!(:rss_feed)
-    |> then(fn show -> show.rss_feed["items"] end)
+    show = Ash.load!(show, :rss_feed)
+
+    show.rss_feed["items"]
     |> Enum.map(fn item ->
       %{
         title: item["title"],
@@ -30,7 +30,8 @@ defmodule Podcaster.Podcast do
 
   def update_transcripts(show) when is_struct(show, Podcaster.Podcast.Show) do
     Podcaster.Podcast.Episode
-    |> Ash.Query.for_read(:get_episodes_for_show_with_no_transcript, %{show_id: show.id})
+    |> Ash.Query.for_read(:get_episodes_for_show, %{show_id: show.id})
+    |> Ash.Query.for_read(:get_all_without_transcript)
     |> Ash.read!()
     |> Enum.map(&update_transcripts/1)
   end

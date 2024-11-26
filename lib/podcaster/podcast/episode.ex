@@ -32,12 +32,6 @@ defmodule Podcaster.Podcast.Episode do
       get? true
     end
 
-    read :get_episodes_for_show_with_no_transcript do
-      argument :show_id, :uuid, allow_nil?: false
-      filter expr(show_id == ^arg(:show_id))
-      filter expr(is_nil(transcript))
-    end
-
     create :create do
       accept [:title, :url, :publish_date, :show_id]
       primary? true
@@ -45,6 +39,11 @@ defmodule Podcaster.Podcast.Episode do
 
     read :read_desc do
       prepare build(sort: [{:publish_date, :desc}])
+    end
+
+    read :get_episodes_for_show do
+      argument :show_id, :uuid, allow_nil?: false
+      filter expr(show_id == ^arg(:show_id))
     end
 
     read :get_all_without_transcript do
