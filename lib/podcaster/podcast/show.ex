@@ -9,14 +9,19 @@ defmodule Podcaster.Podcast.Show do
     repo Podcaster.Repo
   end
 
-  code_interface do
-    define :update, action: :update
-    define :destroy, action: :destroy
+  attributes do
+    uuid_primary_key :id
 
-    define :all, action: :read
-    define :get_by_id, action: :get_by_id, args: [:id], get?: true
+    attribute :title, :ci_string do
+      public? true
+      allow_nil? false
+    end
 
-    define :create_from_rss_feed_url, action: :create_from_rss_feed_url, args: [:rss_feed_url]
+    attribute :url, :string do
+      allow_nil? false
+    end
+
+    timestamps()
   end
 
   actions do
@@ -48,19 +53,14 @@ defmodule Podcaster.Podcast.Show do
     end
   end
 
-  attributes do
-    uuid_primary_key :id
+  code_interface do
+    define :update, action: :update
+    define :destroy, action: :destroy
 
-    attribute :title, :ci_string do
-      public? true
-      allow_nil? false
-    end
+    define :all, action: :read
+    define :get_by_id, action: :get_by_id, args: [:id], get?: true
 
-    attribute :url, :string do
-      allow_nil? false
-    end
-
-    timestamps()
+    define :create_from_rss_feed_url, action: :create_from_rss_feed_url, args: [:rss_feed_url]
   end
 
   relationships do

@@ -9,10 +9,7 @@ defmodule PodcasterWeb.ShowLive.Index do
         Listing Shows
       </.header>
 
-      <.live_component
-        module={PodcasterWeb.ShowLive.FormComponent}
-        id="new-show"
-      />
+      <.live_component module={PodcasterWeb.ShowLive.FormComponent} id="new-show" />
     </div>
 
     <.table

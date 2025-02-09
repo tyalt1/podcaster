@@ -19,22 +19,30 @@ config :spark,
       section_order: [
         :postgres,
         :resource,
-        :code_interface,
+        :attributes,
         :actions,
+        :code_interface,
         :policies,
         :pub_sub,
         :preparations,
         :changes,
         :validations,
         :multitenancy,
-        :attributes,
         :relationships,
         :calculations,
         :aggregates,
         :identities
       ]
     ],
-    "Ash.Domain": [section_order: [:resources, :policies, :authorization, :domain, :execution]]
+    "Ash.Domain": [
+      section_order: [
+        :resources,
+        :policies,
+        :authorization,
+        :domain,
+        :execution
+      ]
+    ]
   ]
 
 config :podcaster,

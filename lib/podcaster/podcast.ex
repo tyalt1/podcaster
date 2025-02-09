@@ -75,5 +75,7 @@ defmodule Podcaster.Podcast do
       {:ok, dt, _} -> dt
       {:error, _} -> nil
     end
+  rescue
+    _ -> nil
   end
 end

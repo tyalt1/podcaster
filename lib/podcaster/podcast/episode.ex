@@ -9,14 +9,29 @@ defmodule Podcaster.Podcast.Episode do
     repo Podcaster.Repo
   end
 
-  code_interface do
-    define :create, action: :create
-    define :destroy, action: :destroy
+  attributes do
+    uuid_primary_key :id
 
-    define :all, action: :read
-    define :get_by_id, action: :get_by_id, args: [:id], get?: true
+    attribute :title, :string do
+      public? true
+      allow_nil? false
+    end
 
-    define :add_transcript, action: :add_transcript, args: [:transcript]
+    attribute :url, :string do
+      public? true
+      allow_nil? false
+    end
+
+    attribute :publish_date, :datetime do
+      public? true
+      allow_nil? true
+    end
+
+    attribute :transcript, {:array, :map} do
+      allow_nil? true
+    end
+
+    timestamps()
   end
 
   actions do
@@ -55,29 +70,14 @@ defmodule Podcaster.Podcast.Episode do
     end
   end
 
-  attributes do
-    uuid_primary_key :id
+  code_interface do
+    define :create, action: :create
+    define :destroy, action: :destroy
 
-    attribute :title, :string do
-      public? true
-      allow_nil? false
-    end
+    define :all, action: :read
+    define :get_by_id, action: :get_by_id, args: [:id], get?: true
 
-    attribute :url, :string do
-      public? true
-      allow_nil? false
-    end
-
-    attribute :publish_date, :datetime do
-      public? true
-      allow_nil? true
-    end
-
-    attribute :transcript, {:array, :map} do
-      allow_nil? true
-    end
-
-    timestamps()
+    define :add_transcript, action: :add_transcript, args: [:transcript]
   end
 
   relationships do
