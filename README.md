@@ -1,6 +1,8 @@
 # Podcaster
 
-This will listen to podcasts so you don't have to! 
+This will listen to podcasts so you don't have to!
+
+Podcaster is a website that takes an RSS feed of a podcast, downloads the episodes, and generates transcripts of episodes. The transcripts are generated using the `whisper` AI model, running locally.
 
 ## Getting Started
 
